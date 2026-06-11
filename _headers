@@ -1,0 +1,11 @@
+# Cloudflare Pages headers
+# Always revalidate HTML so visitors get the latest deploy without a hard refresh.
+/index.html
+  Cache-Control: no-cache
+
+/
+  Cache-Control: no-cache
+
+# Static assets can be cached for a while.
+/assets/*
+  Cache-Control: public, max-age=86400
