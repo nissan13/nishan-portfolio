@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nishan Shrestha — Flutter Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0e0e0e;
+      --paper:  #f7f5f0;
+      --muted:  #8a8580;
+      --accent: #3a5cff;
+      --rule:   rgba(14,14,14,0.10);
+      --mono:   'DM Mono', monospace;
+      --serif:  'DM Serif Display', serif;
+      --sans:   'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav { padding: 28px 0 0; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--muted); text-decoration: none; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* Hero */
+    .hero { padding: 80px 0 64px; border-bottom: 1px solid var(--rule); }
+    .hero-eyebrow { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 20px; }
+    .hero h1 { font-family: var(--serif); font-size: clamp(2.8rem, 7vw, 4.5rem); line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 24px; }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { font-size: 17px; color: var(--muted); font-weight: 300; max-width: 480px; line-height: 1.7; }
+
+    /* Stack ticker */
+    .stack-ticker { margin: 52px 0; overflow: hidden; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 14px 0; position: relative; }
+    .stack-ticker::before, .stack-ticker::after { content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none; }
+    .stack-ticker::before { left: 0; background: linear-gradient(to right, var(--paper), transparent); }
+    .stack-ticker::after  { right: 0; background: linear-gradient(to left, var(--paper), transparent); }
+    .ticker-track { display: flex; gap: 40px; width: max-content; animation: ticker 26s linear infinite; }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; display: flex; align-items: center; gap: 12px; }
+    .ticker-item::before { content: '▸'; color: var(--accent); font-size: 10px; }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .ticker-track { animation: none; } }
+
+    /* Section base */
+    .section { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+    .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+
+    /* About */
+    .section p { font-size: 16px; color: var(--ink); font-weight: 300; line-height: 1.8; margin-bottom: 16px; }
+    .section p:last-child { margin-bottom: 0; }
+
+    /* Experience */
+    .exp-list { display: grid; gap: 0; }
+    .exp-item { padding: 24px 0; border-bottom: 1px solid var(--rule); }
+    .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .exp-header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
+    .exp-role { font-size: 15px; font-weight: 500; }
+    .exp-period { font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .exp-company { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 10px; }
+    .exp-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+    /* Projects */
+    .project-list { display: grid; gap: 0; }
+    .project-item { padding: 22px 0; border-bottom: 1px solid var(--rule); display: flex; gap: 20px; align-items: baseline; }
+    .project-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .project-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--paper); background: var(--accent); padding: 3px 7px; border-radius: 2px; white-space: nowrap; flex-shrink: 0; }
+    .project-tag.current { background: #1a9e5c; }
+    .project-body { flex: 1; }
+    .project-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+    .project-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+
+    /* Skills */
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-chip { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink); border: 1px solid var(--rule); padding: 6px 12px; border-radius: 2px; }
+
+    /* Contact */
+    .contact-section { padding: 56px 0 80px; }
+    .contact-intro { font-size: 16px; font-weight: 300; line-height: 1.8; margin-bottom: 32px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .contact-link { display: flex; flex-direction: column; padding: 20px; border: 1px solid var(--rule); text-decoration: none; color: var(--ink); transition: border-color 0.2s, background 0.2s; border-radius: 2px; }
+    .contact-link:hover { border-color: var(--accent); background: rgba(58,92,255,0.03); }
+    .contact-link-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .contact-link-value { font-size: 14px; font-weight: 500; }
+
+    /* Footer */
+    footer { padding: 24px 0; border-top: 1px solid var(--rule); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+    .footer-location { font-family: var(--mono); font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    .dot { width: 6px; height: 6px; background: #3cb371; border-radius: 50%; display: inline-block; animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    @media (max-width: 480px) {
+      .hero { padding: 56px 0 48px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-inner { flex-direction: column; gap: 8px; }
+      .exp-header { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Nav -->
+  <nav>
+    <a class="logo" href="/">nishanstha.com.np</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <p class="hero-eyebrow">Flutter Developer · Kathmandu, Nepal</p>
+    <h1>Building things<br>people <em>actually</em><br>reach for.</h1>
+    <p class="hero-sub">
+      I craft mobile experiences with Flutter — clean architecture, real-time features,
+      and the kind of polish that makes users forget they're using an app.
+    </p>
+  </header>
+
+  <!-- Stack ticker -->
+  <div class="stack-ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Flutter</span>
+      <span class="ticker-item">Dart</span>
+      <span class="ticker-item">BLoC / Cubit</span>
+      <span class="ticker-item">Clean Architecture</span>
+      <span class="ticker-item">GraphQL</span>
+      <span class="ticker-item">REST APIs</span>
+      <span class="ticker-item">Firebase</span>
+      <span class="ticker-item">WebRTC</span>
+      <span class="ticker-item">VoIP</span>
+      <span class="ticker-item">SQLite</span>
+      <span class="ticker-item">Deep Linking</span>
+      <span class="ticker-item">HLS Streaming</span>
+      <span class="ticker-item">Git</span>
+      <span class="ticker-item">Figma</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Flutter</span>
+      <span class="ticker-item">Dart</span>
+      <span class="ticker-item">BLoC / Cubit</span>
+      <span class="ticker-item">Clean Architecture</span>
+      <span class="ticker-item">GraphQL</span>
+      <span class="ticker-item">REST APIs</span>
+      <span class="ticker-item">Firebase</span>
+      <span class="ticker-item">WebRTC</span>
+      <span class="ticker-item">VoIP</span>
+      <span class="ticker-item">SQLite</span>
+      <span class="ticker-item">Deep Linking</span>
+      <span class="ticker-item">HLS Streaming</span>
+      <span class="ticker-item">Git</span>
+      <span class="ticker-item">Figma</span>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <p class="section-label">About</p>
+    <p>
+      I'm a Flutter developer based in Kathmandu, Nepal. I graduated with a BCA from
+      Kantipur City College in 2024 and have been shipping production apps since —
+      from VoIP platforms and CRM systems to social media apps with real-time chat and video calling.
+    </p>
+    <p>
+      I care about the details that are easy to skip: race conditions in state transitions,
+      platform-specific edge cases, and the micro-interactions that make an app feel right.
+    </p>
+  </section>
+
+  <!-- Experience -->
+  <section class="section" id="experience">
+    <p class="section-label">Experience</p>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Flutter Developer</span>
+          <span class="exp-period">Dec 2025 – Present</span>
+        </div>
+        <div class="exp-company">Drop (Social App)</div>
+        <div class="exp-desc">
+          Building and maintaining a social media app centered on real-time connection.
+          Working across WebRTC video calling, live chat with BLoC state management,
+          HLS media downloading, deep linking across two domains, and a native incoming call UI
+          using Flutter CallKit and Firebase Cloud Messaging.
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Flutter Developer</span>
+          <span class="exp-period">May 2024 – Nov 2025</span>
+        </div>
+        <div class="exp-company">Varosa Technology</div>
+        <div class="exp-desc">
+          Built and maintained multiple client products — a VoIP communication platform,
+          a government job portal, a retail management system, and a CRM app.
+          Led feature development using BLoC, Cubit, GraphQL, and REST APIs across all projects.
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-role">Flutter Developer Intern</span>
+          <span class="exp-period">Jan 2024 – Apr 2024</span>
+        </div>
+        <div class="exp-company">Varosa Technology</div>
+        <div class="exp-desc">
+          Converted UI designs into Flutter layouts, integrated APIs for real-time data,
+          built reusable widgets, and contributed to live client projects under senior guidance.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects">
+    <p class="section-label">Projects</p>
+    <div class="project-list">
+
+      <div class="project-item">
+        <span class="project-tag current">Current</span>
+        <div class="project-body">
+          <div class="project-name">Drop — Social Media App</div>
+          <div class="project-desc">
+            Real-time chat, WebRTC video calling with PiP and screenshare, HLS video downloading,
+            native incoming call UI (iOS CallKit / Android ConnectionService), and deep linking
+            across multiple domains. Built with BLoC and a custom routing layer.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <span class="project-tag">VoIP</span>
+        <div class="project-body">
+          <div class="project-name">Calilio — VoIP Communication Platform</div>
+          <div class="project-desc">
+            Cross-platform VoIP app with BLoC and Clean Architecture. Implemented timezone
+            synchronisation for accurate call logs, GraphQL queries and mutations for live data,
+            and regression testing across calling and messaging modules.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <span class="project-tag">CRM</span>
+        <div class="project-body">
+          <div class="project-name">LeadHeed — CRM System</div>
+          <div class="project-desc">
+            GraphQL-backed CRM with Pipeline (Milestone & Deal) modules, Task Management,
+            and real-time data updates across customer and sales workflows.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <span class="project-tag">Gov</span>
+        <div class="project-body">
+          <div class="project-name">Shram Sansar — Government Job Portal</div>
+          <div class="project-desc">
+            REST API integration for authentication, job listings, training programmes, and
+            services. Built Home, Job Listing, Job Details, Training, and Services screens in Flutter.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <span class="project-tag">Retail</span>
+        <div class="project-body">
+          <div class="project-name">Fishking — Retail Management System</div>
+          <div class="project-desc">
+            Admin and client apps with multi-role access and delivery management using Cubit.
+            Converted UI designs into responsive Flutter layouts and integrated product, order,
+            and transaction APIs.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section">
+    <p class="section-label">Skills</p>
+    <div class="skills-grid">
+      <span class="skill-chip">Dart</span>
+      <span class="skill-chip">Flutter</span>
+      <span class="skill-chip">BLoC</span>
+      <span class="skill-chip">Cubit</span>
+      <span class="skill-chip">Clean Architecture</span>
+      <span class="skill-chip">GraphQL</span>
+      <span class="skill-chip">REST APIs</span>
+      <span class="skill-chip">Firebase</span>
+      <span class="skill-chip">WebRTC</span>
+      <span class="skill-chip">SQLite</span>
+      <span class="skill-chip">Deep Linking</span>
+      <span class="skill-chip">HLS Streaming</span>
+      <span class="skill-chip">Git / GitHub</span>
+      <span class="skill-chip">Figma</span>
+      <span class="skill-chip">Jira</span>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-section" id="contact">
+    <p class="section-label">Get in touch</p>
+    <p class="contact-intro">
+      Open to freelance, collaboration, or a good conversation about Flutter.
+    </p>
+    <div class="contact-grid">
+      <a class="contact-link" href="mailto:nissanstha075@gmail.com">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value">nissanstha075@gmail.com</span>
+      </a>
+      <a class="contact-link" href="https://linkedin.com/" target="_blank" rel="noopener">
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-value">linkedin.com/in/nishan-shrestha13</span>
+      </a>
+      <!-- <a class="contact-link" href="https://github.com/" target="_blank" rel="noopener">
+        <span class="contact-link-label">GitHub</span>
+        <span class="contact-link-value">github.com/nishan</span>
+      </a> -->
+      <a class="contact-link" href="https://gitlab.com/" target="_blank" rel="noopener">
+        <span class="contact-link-label">Gitlab</span>
+        <span class="contact-link-value">gitlab.com/nishres13</span>
+      </a>
+      <a class="contact-link" href="tel:+9779843677148">
+        <span class="contact-link-label">Phone</span>
+        <span class="contact-link-value">+977 9843677148</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-copy">© 2026 Nishan Shrestha</span>
+      <span class="footer-location">
+        <span class="dot"></span>
+        Kathmandu, Nepal
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
