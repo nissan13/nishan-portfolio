@@ -261,6 +261,40 @@
     /* Scroll progress bar */
     .scroll-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--accent); z-index: 100; transition: width 0.1s linear; }
 
+    /* ---------- Entrance animations ---------- */
+    @keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    @keyframes navDrop { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+    @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    @keyframes popIn { 0% { opacity: 0; transform: scale(0.6); } 60% { transform: scale(1.08); } 100% { opacity: 1; transform: scale(1); } }
+
+    nav { animation: navDrop 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+
+    /* Staggered hero entrance on load */
+    .hero > * { opacity: 0; animation: riseIn 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
+    .hero-top     { animation-delay: 0.05s; }
+    .hero-eyebrow { animation-delay: 0.15s; }
+    .hero h1      { animation-delay: 0.25s; }
+    .hero-typed-line { animation-delay: 0.40s; }
+    .hero-sub     { animation-delay: 0.50s; }
+    .hero-cta     { animation-delay: 0.60s; }
+    .hero-stats   { animation-delay: 0.70s; }
+
+    .avatar { animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both, floaty 5s ease-in-out 1s infinite; }
+    .stat { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
+    .stat:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 10px 24px rgba(0,0,0,0.06); }
+
+    /* Staggered reveal for lists inside revealed sections */
+    .reveal .stagger-item { opacity: 0; transform: translateY(16px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.in .stagger-item { opacity: 1; transform: none; }
+    .reveal.in .stagger-item:nth-child(1) { transition-delay: 0.05s; }
+    .reveal.in .stagger-item:nth-child(2) { transition-delay: 0.11s; }
+    .reveal.in .stagger-item:nth-child(3) { transition-delay: 0.17s; }
+    .reveal.in .stagger-item:nth-child(4) { transition-delay: 0.23s; }
+    .reveal.in .stagger-item:nth-child(5) { transition-delay: 0.29s; }
+    .reveal.in .stagger-item:nth-child(6) { transition-delay: 0.35s; }
+    .reveal.in .stagger-item:nth-child(7) { transition-delay: 0.41s; }
+    .reveal.in .stagger-item:nth-child(8) { transition-delay: 0.47s; }
+
     @media (max-width: 480px) {
       .hero { padding: 56px 0 48px; }
       .contact-grid { grid-template-columns: 1fr; }
@@ -274,6 +308,9 @@
       .ticker-track { animation: none; }
       .typed-text { border-right: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
+      nav, .avatar { animation: none; }
+      .hero > * { opacity: 1; animation: none; }
+      .reveal .stagger-item { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
     }
   </style>
@@ -394,7 +431,7 @@
     <p class="section-label">Experience</p>
     <div class="exp-list">
 
-      <div class="exp-item">
+      <div class="exp-item stagger-item">
         <div class="exp-header">
           <span class="exp-role">Flutter Developer</span>
           <span class="exp-period">Dec 2025 – Present</span>
@@ -408,7 +445,7 @@
         </div>
       </div>
 
-      <div class="exp-item">
+      <div class="exp-item stagger-item">
         <div class="exp-header">
           <span class="exp-role">Flutter Developer</span>
           <span class="exp-period">May 2024 – Nov 2025</span>
@@ -421,7 +458,7 @@
         </div>
       </div>
 
-      <div class="exp-item">
+      <div class="exp-item stagger-item">
         <div class="exp-header">
           <span class="exp-role">Flutter Developer Intern</span>
           <span class="exp-period">Jan 2024 – Apr 2024</span>
@@ -441,7 +478,7 @@
     <p class="section-label">Projects · <span style="color:var(--accent)">click to expand</span></p>
     <div class="project-list">
 
-      <div class="project-item">
+      <div class="project-item stagger-item">
         <span class="project-tag current">Current</span>
         <div class="project-body">
           <div class="project-head">
@@ -464,7 +501,7 @@
         </div>
       </div>
 
-      <div class="project-item">
+      <div class="project-item stagger-item">
         <span class="project-tag">VoIP</span>
         <div class="project-body">
           <div class="project-head">
@@ -487,7 +524,7 @@
         </div>
       </div>
 
-      <div class="project-item">
+      <div class="project-item stagger-item">
         <span class="project-tag">CRM</span>
         <div class="project-body">
           <div class="project-head">
@@ -510,7 +547,7 @@
         </div>
       </div>
 
-      <div class="project-item">
+      <div class="project-item stagger-item">
         <span class="project-tag">Gov</span>
         <div class="project-body">
           <div class="project-head">
@@ -532,7 +569,7 @@
         </div>
       </div>
 
-      <div class="project-item">
+      <div class="project-item stagger-item">
         <span class="project-tag">Retail</span>
         <div class="project-body">
           <div class="project-head">
@@ -586,21 +623,21 @@
       </div>
     </div>
     <div class="skills-grid">
-      <span class="skill-chip">Dart</span>
-      <span class="skill-chip">Flutter</span>
-      <span class="skill-chip">BLoC</span>
-      <span class="skill-chip">Cubit</span>
-      <span class="skill-chip">Clean Architecture</span>
-      <span class="skill-chip">GraphQL</span>
-      <span class="skill-chip">REST APIs</span>
-      <span class="skill-chip">Firebase</span>
-      <span class="skill-chip">WebRTC</span>
-      <span class="skill-chip">SQLite</span>
-      <span class="skill-chip">Deep Linking</span>
-      <span class="skill-chip">HLS Streaming</span>
-      <span class="skill-chip">Git / GitHub</span>
-      <span class="skill-chip">Figma</span>
-      <span class="skill-chip">Jira</span>
+      <span class="skill-chip stagger-item">Dart</span>
+      <span class="skill-chip stagger-item">Flutter</span>
+      <span class="skill-chip stagger-item">BLoC</span>
+      <span class="skill-chip stagger-item">Cubit</span>
+      <span class="skill-chip stagger-item">Clean Architecture</span>
+      <span class="skill-chip stagger-item">GraphQL</span>
+      <span class="skill-chip stagger-item">REST APIs</span>
+      <span class="skill-chip stagger-item">Firebase</span>
+      <span class="skill-chip stagger-item">WebRTC</span>
+      <span class="skill-chip stagger-item">SQLite</span>
+      <span class="skill-chip stagger-item">Deep Linking</span>
+      <span class="skill-chip stagger-item">HLS Streaming</span>
+      <span class="skill-chip stagger-item">Git / GitHub</span>
+      <span class="skill-chip stagger-item">Figma</span>
+      <span class="skill-chip stagger-item">Jira</span>
     </div>
   </section>
 
@@ -632,23 +669,23 @@
     </form>
 
     <div class="contact-grid">
-      <a class="contact-link" href="mailto:nissanstha075@gmail.com">
+      <a class="contact-link stagger-item" href="mailto:nissanstha075@gmail.com">
         <span class="contact-link-label">Email</span>
         <span class="contact-link-value">nissanstha075@gmail.com</span>
       </a>
-      <a class="contact-link" href="https://linkedin.com/in/nishan-shrestha13" target="_blank" rel="noopener">
+      <a class="contact-link stagger-item" href="https://linkedin.com/in/nishan-shrestha13" target="_blank" rel="noopener">
         <span class="contact-link-label">LinkedIn</span>
         <span class="contact-link-value">linkedin.com/in/nishan-shrestha13</span>
       </a>
-      <a class="contact-link" href="https://github.com/nissan13" target="_blank" rel="noopener">
+      <a class="contact-link stagger-item" href="https://github.com/nissan13" target="_blank" rel="noopener">
         <span class="contact-link-label">GitHub</span>
         <span class="contact-link-value">github.com/nissan13</span>
       </a>
-      <a class="contact-link" href="https://gitlab.com/nishres13" target="_blank" rel="noopener">
+      <a class="contact-link stagger-item" href="https://gitlab.com/nishres13" target="_blank" rel="noopener">
         <span class="contact-link-label">Gitlab</span>
         <span class="contact-link-value">gitlab.com/nishres13</span>
       </a>
-      <a class="contact-link" href="tel:+9779843677148">
+      <a class="contact-link stagger-item" href="tel:+9779843677148">
         <span class="contact-link-label">Phone</span>
         <span class="contact-link-value">+977 9843677148</span>
       </a>
@@ -666,7 +703,7 @@
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <span class="footer-copy">© 2026 Nishan Shrestha · Hand-coded, no frameworks</span>
+      <span class="footer-copy">© 2026 Nishan Shrestha</span>
       <span class="footer-location">
         <span class="dot"></span>
         Kathmandu, Nepal
