@@ -283,17 +283,27 @@
     .stat { transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
     .stat:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 10px 24px rgba(0,0,0,0.06); }
 
-    /* Staggered reveal for lists inside revealed sections */
-    .reveal .stagger-item { opacity: 0; transform: translateY(16px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
-    .reveal.in .stagger-item { opacity: 1; transform: none; }
-    .reveal.in .stagger-item:nth-child(1) { transition-delay: 0.05s; }
-    .reveal.in .stagger-item:nth-child(2) { transition-delay: 0.11s; }
-    .reveal.in .stagger-item:nth-child(3) { transition-delay: 0.17s; }
-    .reveal.in .stagger-item:nth-child(4) { transition-delay: 0.23s; }
-    .reveal.in .stagger-item:nth-child(5) { transition-delay: 0.29s; }
-    .reveal.in .stagger-item:nth-child(6) { transition-delay: 0.35s; }
-    .reveal.in .stagger-item:nth-child(7) { transition-delay: 0.41s; }
-    .reveal.in .stagger-item:nth-child(8) { transition-delay: 0.47s; }
+    /* Staggered reveal for lists inside revealed sections.
+       Uses a keyframe animation (with `backwards` fill so items stay hidden
+       during their delay) rather than a transition, so each item's own hover
+       transition — border-color, transform, box-shadow, etc. — stays intact. */
+    .reveal .stagger-item { opacity: 0; }
+    .reveal.in .stagger-item { opacity: 1; animation: riseIn 0.6s cubic-bezier(0.16,1,0.3,1) backwards; }
+    .reveal.in .stagger-item:nth-child(1)  { animation-delay: 0.05s; }
+    .reveal.in .stagger-item:nth-child(2)  { animation-delay: 0.11s; }
+    .reveal.in .stagger-item:nth-child(3)  { animation-delay: 0.17s; }
+    .reveal.in .stagger-item:nth-child(4)  { animation-delay: 0.23s; }
+    .reveal.in .stagger-item:nth-child(5)  { animation-delay: 0.29s; }
+    .reveal.in .stagger-item:nth-child(6)  { animation-delay: 0.35s; }
+    .reveal.in .stagger-item:nth-child(7)  { animation-delay: 0.41s; }
+    .reveal.in .stagger-item:nth-child(8)  { animation-delay: 0.47s; }
+    .reveal.in .stagger-item:nth-child(9)  { animation-delay: 0.53s; }
+    .reveal.in .stagger-item:nth-child(10) { animation-delay: 0.59s; }
+    .reveal.in .stagger-item:nth-child(11) { animation-delay: 0.65s; }
+    .reveal.in .stagger-item:nth-child(12) { animation-delay: 0.71s; }
+    .reveal.in .stagger-item:nth-child(13) { animation-delay: 0.77s; }
+    .reveal.in .stagger-item:nth-child(14) { animation-delay: 0.83s; }
+    .reveal.in .stagger-item:nth-child(15) { animation-delay: 0.89s; }
 
     @media (max-width: 480px) {
       .hero { padding: 56px 0 48px; }
@@ -310,7 +320,7 @@
       .reveal { opacity: 1; transform: none; transition: none; }
       nav, .avatar { animation: none; }
       .hero > * { opacity: 1; animation: none; }
-      .reveal .stagger-item { opacity: 1; transform: none; transition: none; }
+      .reveal .stagger-item, .reveal.in .stagger-item { opacity: 1; transform: none; animation: none; }
       html { scroll-behavior: auto; }
     }
   </style>
